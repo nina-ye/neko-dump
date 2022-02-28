@@ -5,15 +5,53 @@ import { StatusBar } from 'expo-status-bar';
 import { Accelerometer } from 'expo-sensors';
 import entities from './src/entities';
 import Physics from './src/systems/physics';
+import { DEVICE_WIDTH } from './src/utils/constants';
+import { Subscription } from 'expo-sensors/build/Pedometer';
 
 export default function Game() {
   const [running, setRunning] = useState(false);
   const [gameEngine, setGameEngine] = useState<any>(null);
   const [currentPoints, setCurrentPoints] = useState(0);
+  const [accelerometerSubscription, setAccelerometerSubscription] =
+    useState<null | Subscription>(null);
+  const [accelerometerDataX, setAccelerometerDataX] = useState(0);
+
+  const _subscribeAccelerometer = () => {
+    setAccelerometerSubscription(
+      Accelerometer.addListener(({ x }) => {
+        setAccelerometerDataX(x);
+      }),
+    );
+  };
+
+  const _unsubscribeAccelerometer = () => {
+    accelerometerSubscription && accelerometerSubscription.remove();
+    setAccelerometerSubscription(null);
+  };
 
   useEffect(() => {
     setRunning(false);
+    _subscribeAccelerometer();
+
+    return () => _unsubscribeAccelerometer();
   }, []);
+
+  // Accelerometer.addListener(({ x }) => {
+  //   const currentXPos = entities.Farmer.body.position.x;
+  //   let xDelta = x;
+
+  //   if (
+  //     (currentXPos >= DEVICE_WIDTH - 25 && x > 0) ||
+  //     (currentXPos <= 25 && x < 0)
+  //   ) {
+  //     xDelta = 0;
+  //   }
+
+  //   Matter.Body.translate(entities.Farmer.body, {
+  //     x: xDelta,
+  //     y: 0,
+  //   });
+  // });
 
   return (
     <View style={{ flex: 1 }}>
@@ -31,7 +69,10 @@ export default function Game() {
         ref={(ref: any) => {
           setGameEngine(ref);
         }}
-        systems={[Physics]}
+        systems={[
+          (entities: any, args: any) =>
+            Physics(accelerometerDataX, entities, args),
+        ]}
         entities={entities()}
         running={running}
         onEvent={(e: any) => {

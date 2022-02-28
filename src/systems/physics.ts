@@ -5,6 +5,7 @@ import { DEVICE_WIDTH } from '../utils/constants';
 import { Accelerometer } from 'expo-sensors';
 
 const Physics = (
+  accelerometerDataX: number,
   entities: any,
   {
     touches,
@@ -23,22 +24,22 @@ const Physics = (
   //     });
   //   });
 
-  Accelerometer.addListener(({ x }) => {
-    const currentXPos = entities.Farmer.body.position.x;
-    let xDelta = x;
+  // Accelerometer.addListener(({ x }) => {
+  const currentXPos = entities.Farmer.body.position.x;
+  let xDelta = accelerometerDataX * 15;
 
-    if (
-      (currentXPos >= DEVICE_WIDTH - 25 && x > 0) ||
-      (currentXPos <= 25 && x < 0)
-    ) {
-      xDelta = 0;
-    }
+  if (
+    (currentXPos >= DEVICE_WIDTH - 40 && accelerometerDataX > 0) ||
+    (currentXPos <= 40 && accelerometerDataX < 0)
+  ) {
+    xDelta = 0;
+  }
 
-    Matter.Body.translate(entities.Farmer.body, {
-      x: xDelta,
-      y: 0,
-    });
+  Matter.Body.translate(entities.Farmer.body, {
+    x: xDelta,
+    y: 0,
   });
+  // });
 
   Matter.Engine.update(engine, time.delta);
 
