@@ -12,8 +12,8 @@ interface BaseEntity {
   renderer: ({ body }: { body: Matter.Body }) => JSX.Element;
 }
 
-interface AlpacaEntity extends BaseEntity {
-  type: 'alpaca';
+interface FouEntity extends BaseEntity {
+  type: 'fou';
   lastPoop: null | number;
 }
 
@@ -21,14 +21,14 @@ interface PoopEntity extends BaseEntity {
   type: 'poop';
 }
 
-interface FarmerEntity extends BaseEntity {
-  type: 'farmer';
+interface GirlEntity extends BaseEntity {
+  type: 'girl';
 }
 
 export type Entity =
-  | AlpacaEntity
+  | FouEntity
   | PoopEntity
-  | FarmerEntity
+  | GirlEntity
   | Physics;
 
 export interface Entities {

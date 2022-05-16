@@ -1,11 +1,14 @@
 import React from 'react';
 import Matter from 'matter-js';
 import { View, Image } from 'react-native';
+import fou from '../../assets/sprites/fou_1.png';
 import { Entity } from '../entities/types';
-import { collisionCategories } from '../utils/constants';
-import farmer from '../../assets/sprites/farmer_1.png';
+import {
+  collisionCategories,
+  collisionGroups,
+} from '../utils/constants';
 
-const FarmerRenderer = ({ body }: { body: Matter.Body }) => {
+const FouRenderer = ({ body }: { body: Matter.Body }) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
 
@@ -15,46 +18,46 @@ const FarmerRenderer = ({ body }: { body: Matter.Body }) => {
 
   return (
     <Image
-      source={farmer}
+      source={fou}
       style={{
-        width: 120 * 0.5,
-        height: 160 * 0.5,
+        width: 80 * 0.8,
+        height: 90 * 0.8,
         resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
-        //width: widthBody,
-        //height: heightBody,
       }}
     />
   );
 };
 
-const Farmer = (
+const Fou = (
   world: Matter.World,
   pos: { x: number; y: number },
 ): Entity => {
-  const initialFarmer = Matter.Bodies.rectangle(
+  const initialFou = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
-    120 * 0.4,
-    160 * 0.4,
+    80 * 0.6,
+    90 * 0.6,
     {
-      label: 'Farmer',
-      isStatic: true,
+      label: 'Fou',
+      frictionAir: 0.03,
       collisionFilter: {
-        category: collisionCategories.farmer,
-        mask: collisionCategories.alpaca | collisionCategories.poop,
+        category: collisionCategories.fou,
+        group: collisionGroups.fou,
+        mask: collisionCategories.girl,
       },
     },
   );
-  Matter.World.add(world, initialFarmer);
+  Matter.World.add(world, initialFou);
 
   return {
-    body: initialFarmer,
-    renderer: FarmerRenderer,
-    type: 'farmer',
+    body: initialFou,
+    renderer: FouRenderer,
+    lastPoop: null,
+    type: 'fou',
   };
 };
 
-export default Farmer;
+export default Fou;

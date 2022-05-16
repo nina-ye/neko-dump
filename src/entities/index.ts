@@ -1,8 +1,8 @@
 import Matter from 'matter-js';
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../utils/constants';
 import { Entity, Entities } from './types';
-import Farmer from '../components/Farmer';
-import Alpaca from '../components/Alpaca';
+import Girl from '../components/Girl';
+import Fou from '../components/Fou';
 import { getPipeSizePosPair } from '../utils/random';
 
 const entities = (): Entities => {
@@ -18,7 +18,7 @@ const entities = (): Entities => {
   return {
     physics: { engine, world, type: 'physics' },
 
-    farmer: Farmer(world, {
+    girl: Girl(world, {
       x: DEVICE_WIDTH / 2,
       y: DEVICE_HEIGHT - 100,
     }),

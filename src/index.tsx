@@ -5,11 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Accelerometer } from 'expo-sensors';
 import entities from './entities';
 import Physics from './systems/physics';
-import {
-  AddAlpaca,
-  RemoveObstacle,
-  AddPoop,
-} from './systems/obstacles';
+import { AddFou, RemoveObstacle, AddPoop } from './systems/obstacles';
 import { DEVICE_WIDTH } from './utils/constants';
 import { Subscription } from 'expo-sensors/build/Pedometer';
 
@@ -60,7 +56,7 @@ export default function Game() {
         systems={[
           (entities: any, args: any) =>
             Physics(accelerometerDataX, entities, args),
-          AddAlpaca,
+          AddFou,
           RemoveObstacle,
           AddPoop,
         ]}

@@ -1,5 +1,5 @@
-# Alpaca Dump
+# Neko Dump
 
-Cool Alpaca game built with React Native with Expo
+Cool cat game built with React Native and Expo
 
 `yarn start` to start

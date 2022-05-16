@@ -1,17 +1,17 @@
 import Matter from 'matter-js';
 import { GameEngineSystem } from 'react-native-game-engine';
 import { Entities } from '../entities/types';
-import Alpaca from '../components/Alpaca';
+import Fou from '../components/Fou';
 import Poop from '../components/Poop';
 import { getPipeSizePosPair } from '../utils/random';
 import { DEVICE_WIDTH, DEVICE_HEIGHT } from '../utils/constants';
 import { Accelerometer } from 'expo-sensors';
 
-let alpacaCount = 0;
+let fouCount = 0;
 let poopCount = 0;
 let lastDrop: null | number = null;
 
-export const AddAlpaca: GameEngineSystem = (
+export const AddFou: GameEngineSystem = (
   entities: Entities,
   { time },
 ) => {
@@ -20,7 +20,7 @@ export const AddAlpaca: GameEngineSystem = (
   const y = -60;
 
   if (!lastDrop || time.current - lastDrop > 2000) {
-    entities[`alpaca-${alpacaCount++}`] = Alpaca(world, { x, y });
+    entities[`fou-${fouCount++}`] = Fou(world, { x, y });
 
     lastDrop = time.current;
   }
@@ -31,7 +31,7 @@ export const AddAlpaca: GameEngineSystem = (
 export const AddPoop: GameEngineSystem = (entities, { time }) => {
   for (let key of Object.keys(entities)) {
     if (
-      key.startsWith('alpaca') &&
+      key.startsWith('fou') &&
       (!entities[key].lastPoop ||
         time.current - entities[key].lastPoop > 3000)
     ) {
@@ -55,7 +55,7 @@ export const RemoveObstacle: GameEngineSystem = (
     const world = entities.physics.world;
 
     if (
-      (entity.type === 'poop' || entity.type === 'alpaca') &&
+      (entity.type === 'poop' || entity.type === 'fou') &&
       entity.body.bounds.min.y > DEVICE_HEIGHT
     ) {
       Matter.Composite.remove(world, entity.body);

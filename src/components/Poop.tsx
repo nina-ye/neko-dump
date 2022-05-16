@@ -41,7 +41,7 @@ const Poop = (
     collisionFilter: {
       category: collisionCategories.poop,
       group: collisionGroups.poop,
-      mask: collisionCategories.farmer,
+      mask: collisionCategories.girl,
     },
   });
   Matter.World.add(world, initialPoop);

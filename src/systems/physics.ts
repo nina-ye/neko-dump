@@ -15,7 +15,7 @@ const Physics = (
 ) => {
   let engine = entities.physics.engine;
 
-  const currentXPos = entities.farmer.body.position.x;
+  const currentXPos = entities.girl.body.position.x;
   let xDelta = accelerometerDataX * 15;
 
   if (
@@ -25,7 +25,7 @@ const Physics = (
     xDelta = 0;
   }
 
-  Matter.Body.translate(entities.farmer.body, {
+  Matter.Body.translate(entities.girl.body, {
     x: xDelta,
     y: 0,
   });
