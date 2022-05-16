@@ -12,8 +12,8 @@ interface BaseEntity {
   renderer: ({ body }: { body: Matter.Body }) => JSX.Element;
 }
 
-interface FouEntity extends BaseEntity {
-  type: 'fou';
+interface CatEntity extends BaseEntity {
+  type: 'cat';
   lastPoop: null | number;
 }
 
@@ -25,11 +25,7 @@ interface GirlEntity extends BaseEntity {
   type: 'girl';
 }
 
-export type Entity =
-  | FouEntity
-  | PoopEntity
-  | GirlEntity
-  | Physics;
+export type Entity = CatEntity | PoopEntity | GirlEntity | Physics;
 
 export interface Entities {
   physics: Physics;

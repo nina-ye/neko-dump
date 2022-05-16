@@ -1,14 +1,14 @@
 import React from 'react';
 import Matter from 'matter-js';
 import { View, Image } from 'react-native';
-import fou from '../../assets/sprites/fou.gif';
+import ame from '../../assets/sprites/ame.gif';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,
   collisionGroups,
 } from '../utils/constants';
 
-const FouRenderer = ({ body }: { body: Matter.Body }) => {
+const AmeRenderer = ({ body }: { body: Matter.Body }) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
 
@@ -18,7 +18,7 @@ const FouRenderer = ({ body }: { body: Matter.Body }) => {
 
   return (
     <Image
-      source={fou}
+      source={ame}
       style={{
         width: 80 * 0.8,
         height: 90 * 0.8,
@@ -31,33 +31,33 @@ const FouRenderer = ({ body }: { body: Matter.Body }) => {
   );
 };
 
-const Fou = (
+const Ame = (
   world: Matter.World,
   pos: { x: number; y: number },
 ): Entity => {
-  const initialFou = Matter.Bodies.rectangle(
+  const initialAme = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
     80 * 0.6,
     90 * 0.6,
     {
-      label: 'Fou',
+      label: 'Ame',
       frictionAir: 0.03,
       collisionFilter: {
-        category: collisionCategories.fou,
-        group: collisionGroups.fou,
+        category: collisionCategories.ame,
+        group: collisionGroups.ame,
         mask: collisionCategories.girl,
       },
     },
   );
-  Matter.World.add(world, initialFou);
+  Matter.World.add(world, initialAme);
 
   return {
-    body: initialFou,
-    renderer: FouRenderer,
+    body: initialAme,
+    renderer: AmeRenderer,
     lastPoop: null,
     type: 'cat',
   };
 };
 
-export default Fou;
+export default Ame;
