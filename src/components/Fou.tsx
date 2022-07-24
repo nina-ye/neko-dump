@@ -26,6 +26,7 @@ const FouRenderer = ({ body }: { body: Matter.Body }) => {
         position: 'absolute',
         left: xBody,
         top: yBody,
+        zIndex: 2,
       }}
     />
   );
@@ -42,6 +43,7 @@ const Fou = (
     90 * 0.6,
     {
       label: 'Fou',
+      velocity: { x: 0, y: 2 },
       frictionAir: 0.03,
       collisionFilter: {
         category: collisionCategories.fou,

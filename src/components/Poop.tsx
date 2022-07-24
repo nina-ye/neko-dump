@@ -34,10 +34,12 @@ const PoopRenderer = ({ body }: { body: Matter.Body }) => {
 const Poop = (
   world: Matter.World,
   pos: { x: number; y: number },
+  cat: 'fou' | 'ame',
 ): Entity => {
   const initialPoop = Matter.Bodies.rectangle(pos.x, pos.y, 30, 30, {
     label: 'Poop',
-    frictionAir: 0.02,
+    velocity: cat === 'fou' ? { x: 0, y: 3 } : { x: 0, y: 6 },
+    frictionAir: cat === 'fou' ? 0.02 : 0.01,
     collisionFilter: {
       category: collisionCategories.poop,
       group: collisionGroups.poop,

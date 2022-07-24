@@ -69,6 +69,19 @@ const Physics = (
     });
   }
 
+  for (let key of Object.keys(entities)) {
+    if (
+      key.startsWith('fou') ||
+      key.startsWith('ame') ||
+      key.startsWith('poop')
+    ) {
+      Matter.Body.setVelocity(
+        entities[key].body,
+        entities[key].body.velocity,
+      );
+    }
+  }
+
   Matter.Engine.update(engine, time.delta);
 
   Matter.Events.on(engine, 'collisionStart', (event) => {

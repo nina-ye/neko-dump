@@ -4,9 +4,7 @@ import { Entities } from '../entities/types';
 import Ame from '../components/Ame';
 import Fou from '../components/Fou';
 import Poop from '../components/Poop';
-import { getPipeSizePosPair } from '../utils/random';
 import { DEVICE_WIDTH, DEVICE_HEIGHT } from '../utils/constants';
-import { Accelerometer } from 'expo-sensors';
 
 let fouCount = 0;
 let ameCount = 0;
@@ -20,7 +18,7 @@ export const AddCat: GameEngineSystem = (
   const world = entities.physics.world;
   const x = Math.random() * (DEVICE_WIDTH - 45);
   const y = -60;
-  const addAme = Math.random() > 0.66 ? true : false;
+  const addAme = Math.random() > 0.7 ? true : false;
 
   if (!lastDrop || time.current - lastDrop > 2000) {
     if (addAme) {
@@ -43,12 +41,16 @@ export const AddPoop: GameEngineSystem = (entities, { time }) => {
           time.current - entities[key].lastPoop > 3000)) ||
       (key.startsWith('ame') &&
         (!entities[key].lastPoop ||
-          time.current - entities[key].lastPoop > 1500))
+          time.current - entities[key].lastPoop > 1000))
     ) {
       const world = entities.physics.world;
       const { x, y } = entities[key].body.position;
 
-      entities[`poop-${poopCount++}`] = Poop(world, { x, y: y + 60 });
+      entities[`poop-${poopCount++}`] = Poop(
+        world,
+        { x, y: y + 60 },
+        key.startsWith('fou') ? 'fou' : 'ame',
+      );
       entities[key].lastPoop = time.current;
     }
   }

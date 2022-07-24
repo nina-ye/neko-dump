@@ -26,6 +26,7 @@ const AmeRenderer = ({ body }: { body: Matter.Body }) => {
         position: 'absolute',
         left: xBody,
         top: yBody,
+        zIndex: 2,
       }}
     />
   );
@@ -42,7 +43,8 @@ const Ame = (
     90 * 0.6,
     {
       label: 'Ame',
-      frictionAir: 0.03,
+      velocity: { x: 0, y: 3 },
+      frictionAir: 0.02,
       collisionFilter: {
         category: collisionCategories.ame,
         group: collisionGroups.ame,
