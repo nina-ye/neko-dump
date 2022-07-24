@@ -8,12 +8,14 @@ export const collisionCategories = {
   fou: 2,
   ame: 2,
   poop: 4,
-  background: 8,
+  bag: 8,
+  background: 16,
 };
 
 export const collisionGroups = {
   fou: -1,
   ame: -1,
   poop: -2,
-  background: -4,
+  bag: -8,
+  background: -16,
 };

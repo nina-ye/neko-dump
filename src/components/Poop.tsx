@@ -1,6 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,

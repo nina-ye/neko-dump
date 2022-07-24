@@ -62,9 +62,10 @@ export const RemoveObstacle: GameEngineSystem = (
   entities: Entities,
   { dispatch },
 ) => {
+  const world = entities.physics.world;
+
   for (let key of Object.keys(entities)) {
     const entity = entities[key];
-    const world = entities.physics.world;
 
     if (
       (entity.type === 'poop' || entity.type === 'cat') &&

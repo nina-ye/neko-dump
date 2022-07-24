@@ -11,6 +11,7 @@ import { Accelerometer } from 'expo-sensors';
 import entities from './entities';
 import Physics from './systems/physics';
 import { AddCat, RemoveObstacle, AddPoop } from './systems/obstacles';
+import { TossBag, RemoveBag } from './systems/bag';
 import { DEVICE_WIDTH } from './utils/constants';
 import { Subscription } from 'expo-sensors/build/Pedometer';
 
@@ -54,6 +55,8 @@ export default function Game() {
           AddCat,
           RemoveObstacle,
           AddPoop,
+          TossBag,
+          RemoveBag,
         ]}
         entities={entities()}
         running={running}

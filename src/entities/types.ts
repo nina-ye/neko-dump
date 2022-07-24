@@ -1,5 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
+import { Pose as GirlPose } from '../components/Girl';
 
 interface Physics {
   engine: Matter.Engine;
@@ -9,7 +10,7 @@ interface Physics {
 
 interface BaseEntity {
   body: Matter.Body;
-  renderer: ({ body }: { body: Matter.Body }) => JSX.Element;
+  renderer: ({ body }: { body: Matter.Body }) => React.ReactElement;
 }
 
 interface CatEntity extends BaseEntity {
@@ -21,8 +22,28 @@ interface PoopEntity extends BaseEntity {
   type: 'poop';
 }
 
-interface GirlEntity extends BaseEntity {
+interface BagEntity extends Omit<BaseEntity, 'renderer'> {
+  type: 'bag';
+  isBagged: boolean;
+  renderer: ({
+    body,
+    isBagged,
+  }: {
+    body: Matter.Body;
+    isBagged: boolean;
+  }) => React.ReactElement;
+}
+
+interface GirlEntity extends Omit<BaseEntity, 'renderer'> {
   type: 'girl';
+  pose: GirlPose;
+  renderer: ({
+    body,
+    pose,
+  }: {
+    body: Matter.Body;
+    pose: GirlPose;
+  }) => React.ReactElement;
 }
 
 interface BackgroundEntity extends BaseEntity {
@@ -33,6 +54,7 @@ export type Entity =
   | CatEntity
   | PoopEntity
   | GirlEntity
+  | BagEntity
   | Physics
   | BackgroundEntity;
 

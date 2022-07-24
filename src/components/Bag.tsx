@@ -1,14 +1,21 @@
 import React from 'react';
 import Matter from 'matter-js';
 import { Image } from 'react-native';
-import ame from '../../assets/sprites/ame.gif';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,
   collisionGroups,
 } from '../utils/constants';
+import bag from '../../assets/sprites/bag.png';
+import bagged from '../../assets/sprites/bagged.png';
 
-const AmeRenderer = ({ body }: { body: Matter.Body }) => {
+const BagRenderer = ({
+  body,
+  isBagged,
+}: {
+  body: Matter.Body;
+  isBagged: boolean;
+}) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
 
@@ -18,48 +25,41 @@ const AmeRenderer = ({ body }: { body: Matter.Body }) => {
 
   return (
     <Image
-      source={ame}
+      source={isBagged ? bagged : bag}
       style={{
-        width: 80 * 0.8,
-        height: 90 * 0.8,
+        width: 50,
+        height: 50,
         resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
-        zIndex: 2,
       }}
     />
   );
 };
 
-const Ame = (
+const Bag = (
   world: Matter.World,
   pos: { x: number; y: number },
 ): Entity => {
-  const initialAme = Matter.Bodies.rectangle(
-    pos.x,
-    pos.y,
-    80 * 0.6,
-    90 * 0.6,
-    {
-      label: 'Ame',
-      velocity: { x: 0, y: 3 },
-      frictionAir: 0.02,
-      collisionFilter: {
-        category: collisionCategories.ame,
-        group: collisionGroups.ame,
-        mask: collisionCategories.girl,
-      },
+  const initialBag = Matter.Bodies.rectangle(pos.x, pos.y, 30, 30, {
+    label: 'Bag',
+    mass: 0.001,
+    velocity: { x: 0, y: -5 },
+    collisionFilter: {
+      category: collisionCategories.bag,
+      group: collisionGroups.bag,
+      mask: collisionCategories.poop,
     },
-  );
-  Matter.World.add(world, initialAme);
+  });
+  Matter.World.add(world, initialBag);
 
   return {
-    body: initialAme,
-    renderer: AmeRenderer,
-    lastPoop: null,
-    type: 'cat',
+    body: initialBag,
+    renderer: BagRenderer,
+    type: 'bag',
+    isBagged: false,
   };
 };
 
-export default Ame;
+export default Bag;

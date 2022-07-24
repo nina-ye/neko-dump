@@ -7,11 +7,7 @@ const BACKGROUND_SPEED = 1 / 800;
 const Physics = (
   accelerometerDataX: number,
   entities: any,
-  {
-    touches,
-    time,
-    dispatch,
-  }: { touches: any; time: any; dispatch: any },
+  { time, dispatch }: { touches: any; time: any; dispatch: any },
 ) => {
   let engine = entities.physics.engine;
 
@@ -79,6 +75,10 @@ const Physics = (
         entities[key].body,
         entities[key].body.velocity,
       );
+    }
+
+    if (key.startsWith('bag')) {
+      Matter.Body.setVelocity(entities[key].body, { x: 0, y: -5 });
     }
   }
 

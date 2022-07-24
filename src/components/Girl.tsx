@@ -1,11 +1,20 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import { Entity } from '../entities/types';
 import { collisionCategories } from '../utils/constants';
-import girl from '../../assets/sprites/girl_default.png';
+import girlDefault from '../../assets/sprites/girl_default.png';
+import girlToss from '../../assets/sprites/girl_toss.png';
 
-const GirlRenderer = ({ body }: { body: Matter.Body }) => {
+export type Pose = 'default' | 'toss' | 'lose';
+
+const GirlRenderer = ({
+  body,
+  pose,
+}: {
+  body: Matter.Body;
+  pose: Pose;
+}) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
 
@@ -15,7 +24,7 @@ const GirlRenderer = ({ body }: { body: Matter.Body }) => {
 
   return (
     <Image
-      source={girl}
+      source={pose === 'toss' ? girlToss : girlDefault}
       style={{
         width: 120 * 0.5,
         height: 160 * 0.5,
@@ -54,6 +63,7 @@ const Girl = (
   return {
     body: initialGirl,
     renderer: GirlRenderer,
+    pose: 'default',
     type: 'girl',
   };
 };
