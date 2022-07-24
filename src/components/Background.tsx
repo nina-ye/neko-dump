@@ -10,6 +10,12 @@ import {
 } from '../utils/constants';
 import background from '../../assets/sprites/background.png';
 
+const IMAGE_WIDTH = 500;
+const IMAGE_HEIGHT = 2000;
+
+export const getScaledImageHeight = (width: number) =>
+  IMAGE_HEIGHT * (width / IMAGE_WIDTH);
+
 const BackgroundRenderer = ({ body }: { body: Matter.Body }) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
@@ -18,6 +24,8 @@ const BackgroundRenderer = ({ body }: { body: Matter.Body }) => {
   const xBody = body.position.x - widthBody / 2;
   const yBody = body.position.y - heightBody / 2;
 
+  const scaledImageHeight = getScaledImageHeight(widthBody);
+
   return (
     <View
       style={{
@@ -25,14 +33,13 @@ const BackgroundRenderer = ({ body }: { body: Matter.Body }) => {
         left: xBody,
         top: yBody,
         width: widthBody,
-        height: heightBody,
+        height: scaledImageHeight,
         overflow: 'hidden',
-        flexDirection: 'column',
         zIndex: -1000,
       }}
     >
       <Image
-        style={{ width: widthBody, height: heightBody }}
+        style={{ width: widthBody, height: scaledImageHeight }}
         resizeMode="cover"
         source={background}
       />

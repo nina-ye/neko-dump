@@ -1,5 +1,6 @@
 import Matter from 'matter-js';
 import { DEVICE_WIDTH, DEVICE_HEIGHT } from '../utils/constants';
+import { getScaledImageHeight } from '../components/Background';
 
 const BACKGROUND_SPEED = 1 / 800;
 
@@ -31,6 +32,7 @@ const Physics = (
     y: 0,
   });
 
+  const scaledImageHeight = getScaledImageHeight(DEVICE_WIDTH);
   if (
     entities.background1.body.position.y >=
     DEVICE_HEIGHT + DEVICE_HEIGHT / 2
@@ -39,7 +41,7 @@ const Physics = (
       x: entities.background1.body.position.x,
       y:
         entities.background2.body.position.y -
-        DEVICE_HEIGHT +
+        scaledImageHeight +
         backgroundYDelta,
     });
   } else {
@@ -57,7 +59,7 @@ const Physics = (
       x: entities.background2.body.position.x,
       y:
         entities.background1.body.position.y -
-        DEVICE_HEIGHT +
+        scaledImageHeight +
         backgroundYDelta,
     });
   } else {

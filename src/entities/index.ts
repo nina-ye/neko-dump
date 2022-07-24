@@ -2,9 +2,9 @@ import Matter from 'matter-js';
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../utils/constants';
 import { Entities } from './types';
 import Girl from '../components/Girl';
-import Background from '../components/Background';
-import Fou from '../components/Fou';
-import { getPipeSizePosPair } from '../utils/random';
+import Background, {
+  getScaledImageHeight,
+} from '../components/Background';
 
 const entities = (): Entities => {
   // sleeping can improve stability and performance, but often at expense of
@@ -15,6 +15,8 @@ const entities = (): Entities => {
   });
 
   let world = engine.world;
+
+  const scaledImageHeight = getScaledImageHeight(DEVICE_WIDTH);
 
   return {
     physics: { engine, world, type: 'physics' },
@@ -28,7 +30,7 @@ const entities = (): Entities => {
       y: DEVICE_HEIGHT / 2,
     }),
     background2: Background(world, {
-      y: DEVICE_HEIGHT / 2 - DEVICE_HEIGHT,
+      y: DEVICE_HEIGHT / 2 - scaledImageHeight,
     }),
   };
 };
