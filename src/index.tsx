@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import { GameEngine } from 'react-native-game-engine';
 import { StatusBar } from 'expo-status-bar';
 import { Accelerometer } from 'expo-sensors';
@@ -38,17 +43,7 @@ export default function Game() {
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 40,
-          fontWeight: 'bold',
-          margin: 20,
-        }}
-      >
-        {currentPoints}
-      </Text>
+    <View style={styles.container}>
       <GameEngine
         ref={(ref: any) => {
           setGameEngine(ref);
@@ -72,49 +67,63 @@ export default function Game() {
               setCurrentPoints(currentPoints + 1);
           }
         }}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-        }}
+        style={styles.gameContainer}
       >
+        <Text style={styles.score}>{currentPoints}</Text>
         <StatusBar hidden={true} />
       </GameEngine>
 
       {!running ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <View style={styles.splashScreenContainer}>
           <TouchableOpacity
-            style={{
-              backgroundColor: 'black',
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}
+            style={styles.startGameButton}
             onPress={() => {
               setRunning(true);
               gameEngine.swap(entities());
               setCurrentPoints(0);
             }}
           >
-            <Text
-              style={{
-                fontWeight: 'bold',
-                color: 'white',
-                fontSize: 30,
-              }}
-            >
-              START GAME
-            </Text>
+            <Text style={styles.startGameText}>START GAME</Text>
           </TouchableOpacity>
         </View>
       ) : null}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  gameContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  score: {
+    position: 'absolute',
+    top: 50,
+    left: DEVICE_WIDTH / 2 - 20,
+    textAlign: 'center',
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  splashScreenContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  startGameButton: {
+    backgroundColor: 'black',
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+  },
+  startGameText: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 30,
+  },
+});

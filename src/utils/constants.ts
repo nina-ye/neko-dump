@@ -7,11 +7,13 @@ export const collisionCategories = {
   girl: 1,
   fou: 2,
   ame: 2,
-  poop: 3,
+  poop: 4,
+  background: 8,
 };
 
 export const collisionGroups = {
   fou: -1,
   ame: -1,
   poop: -2,
+  background: -4,
 };

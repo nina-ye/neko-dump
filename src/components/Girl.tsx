@@ -23,8 +23,6 @@ const GirlRenderer = ({ body }: { body: Matter.Body }) => {
         position: 'absolute',
         left: xBody,
         top: yBody,
-        //width: widthBody,
-        //height: heightBody,
       }}
     />
   );
@@ -44,7 +42,10 @@ const Girl = (
       isStatic: true,
       collisionFilter: {
         category: collisionCategories.girl,
-        mask: collisionCategories.fou | collisionCategories.poop,
+        mask:
+          collisionCategories.fou |
+          collisionCategories.ame |
+          collisionCategories.poop,
       },
     },
   );

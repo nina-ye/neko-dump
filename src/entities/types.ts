@@ -25,7 +25,16 @@ interface GirlEntity extends BaseEntity {
   type: 'girl';
 }
 
-export type Entity = CatEntity | PoopEntity | GirlEntity | Physics;
+interface BackgroundEntity extends BaseEntity {
+  type: 'background';
+}
+
+export type Entity =
+  | CatEntity
+  | PoopEntity
+  | GirlEntity
+  | Physics
+  | BackgroundEntity;
 
 export interface Entities {
   physics: Physics;

@@ -1,8 +1,7 @@
 import Matter from 'matter-js';
+import { DEVICE_WIDTH, DEVICE_HEIGHT } from '../utils/constants';
 
-import { getPipeSizePosPair } from '../utils/random';
-import { DEVICE_WIDTH } from '../utils/constants';
-import { Accelerometer } from 'expo-sensors';
+const BACKGROUND_SPEED = 1 / 800;
 
 const Physics = (
   accelerometerDataX: number,
@@ -15,20 +14,58 @@ const Physics = (
 ) => {
   let engine = entities.physics.engine;
 
-  const currentXPos = entities.girl.body.position.x;
-  let xDelta = accelerometerDataX * 15;
-
+  const currentGirlXPos = entities.girl.body.position.x;
+  let girlXDelta = accelerometerDataX * 20;
   if (
-    (currentXPos >= DEVICE_WIDTH - 40 && accelerometerDataX > 0) ||
-    (currentXPos <= 40 && accelerometerDataX < 0)
+    (currentGirlXPos >= DEVICE_WIDTH - 40 &&
+      accelerometerDataX > 0) ||
+    (currentGirlXPos <= 40 && accelerometerDataX < 0)
   ) {
-    xDelta = 0;
+    girlXDelta = 0;
   }
 
+  const backgroundYDelta = DEVICE_HEIGHT * BACKGROUND_SPEED;
+
   Matter.Body.translate(entities.girl.body, {
-    x: xDelta,
+    x: girlXDelta,
     y: 0,
   });
+
+  if (
+    entities.background1.body.position.y >=
+    DEVICE_HEIGHT + DEVICE_HEIGHT / 2
+  ) {
+    Matter.Body.setPosition(entities.background1.body, {
+      x: entities.background1.body.position.x,
+      y:
+        entities.background2.body.position.y -
+        DEVICE_HEIGHT +
+        backgroundYDelta,
+    });
+  } else {
+    Matter.Body.translate(entities.background1.body, {
+      x: 0,
+      y: backgroundYDelta,
+    });
+  }
+
+  if (
+    entities.background2.body.position.y >=
+    DEVICE_HEIGHT + DEVICE_HEIGHT / 2
+  ) {
+    Matter.Body.setPosition(entities.background2.body, {
+      x: entities.background2.body.position.x,
+      y:
+        entities.background1.body.position.y -
+        DEVICE_HEIGHT +
+        backgroundYDelta,
+    });
+  } else {
+    Matter.Body.translate(entities.background2.body, {
+      x: 0,
+      y: backgroundYDelta,
+    });
+  }
 
   Matter.Engine.update(engine, time.delta);
 

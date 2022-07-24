@@ -1,7 +1,8 @@
 import Matter from 'matter-js';
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../utils/constants';
-import { Entity, Entities } from './types';
+import { Entities } from './types';
 import Girl from '../components/Girl';
+import Background from '../components/Background';
 import Fou from '../components/Fou';
 import { getPipeSizePosPair } from '../utils/random';
 
@@ -21,6 +22,13 @@ const entities = (): Entities => {
     girl: Girl(world, {
       x: DEVICE_WIDTH / 2,
       y: DEVICE_HEIGHT - 100,
+    }),
+
+    background1: Background(world, {
+      y: DEVICE_HEIGHT / 2,
+    }),
+    background2: Background(world, {
+      y: DEVICE_HEIGHT / 2 - DEVICE_HEIGHT,
     }),
   };
 };
