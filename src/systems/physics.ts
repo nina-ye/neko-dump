@@ -31,12 +31,12 @@ const Physics = (
     girlXDelta = 0;
   }
 
-  const backgroundYDelta = DEVICE_HEIGHT * BACKGROUND_SPEED;
-
   Matter.Body.translate(girlEntity.body, {
     x: girlXDelta,
     y: 0,
   });
+
+  const backgroundYDelta = DEVICE_HEIGHT * BACKGROUND_SPEED;
 
   const background1Entity = entities.background1 as BackgroundEntity;
   const background2Entity = entities.background2 as BackgroundEntity;
@@ -103,8 +103,6 @@ const Physics = (
     }
   }
 
-  Matter.Engine.update(engine, time.delta);
-
   Matter.Events.on(engine, 'collisionStart', (event) => {
     event.pairs.forEach(
       (pair: { bodyA: Matter.Body; bodyB: Matter.Body }) => {
@@ -149,11 +147,14 @@ const Physics = (
             };
           }
         } else {
+          (entities.girl as GirlEntity).pose = 'lose';
           dispatch({ type: 'game_over' });
         }
       },
     );
   });
+
+  Matter.Engine.update(engine, time.delta);
 
   return entities;
 };

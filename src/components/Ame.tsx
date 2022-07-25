@@ -1,6 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import ame from '../../assets/sprites/ame.gif';
 import { Entity } from '../entities/types';
 import {
@@ -17,18 +17,27 @@ const AmeRenderer = ({ body }: { body: Matter.Body }) => {
   const yBody = body.position.y - heightBody / 2;
 
   return (
-    <Image
-      source={ame}
+    <View
       style={{
-        width: 80 * 0.8,
-        height: 90 * 0.8,
-        resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
-        zIndex: 2,
+        width: widthBody,
+        height: heightBody,
+        overflow: 'visible',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-    />
+    >
+      <Image
+        style={{
+          width: 150 * 0.4,
+          height: 160 * 0.4,
+        }}
+        resizeMode="contain"
+        source={ame}
+      />
+    </View>
   );
 };
 
@@ -39,8 +48,8 @@ const Ame = (
   const initialAme = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
-    80 * 0.6,
-    90 * 0.6,
+    150 * 0.3,
+    160 * 0.3,
     {
       label: 'Ame',
       velocity: { x: 0, y: 3 },

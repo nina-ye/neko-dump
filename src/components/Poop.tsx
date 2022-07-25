@@ -1,6 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,
@@ -17,17 +17,27 @@ const PoopRenderer = ({ body }: { body: Matter.Body }) => {
   const yBody = body.position.y - heightBody / 2;
 
   return (
-    <Image
-      source={poop}
+    <View
       style={{
-        width: 40,
-        height: 40,
-        resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
+        width: widthBody,
+        height: heightBody,
+        overflow: 'visible',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-    />
+    >
+      <Image
+        style={{
+          width: 30,
+          height: 30,
+        }}
+        resizeMode="contain"
+        source={poop}
+      />
+    </View>
   );
 };
 
@@ -36,7 +46,7 @@ const Poop = (
   pos: { x: number; y: number },
   cat: 'fou' | 'ame',
 ): Entity => {
-  const initialPoop = Matter.Bodies.rectangle(pos.x, pos.y, 30, 30, {
+  const initialPoop = Matter.Bodies.rectangle(pos.x, pos.y, 25, 25, {
     label: 'Poop',
     velocity: cat === 'fou' ? { x: 0, y: 3 } : { x: 0, y: 6 },
     frictionAir: cat === 'fou' ? 0.02 : 0.01,

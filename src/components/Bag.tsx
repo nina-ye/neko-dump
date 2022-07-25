@@ -1,6 +1,6 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,
@@ -24,17 +24,27 @@ const BagRenderer = ({
   const yBody = body.position.y - heightBody / 2;
 
   return (
-    <Image
-      source={isBagged ? bagged : bag}
+    <View
       style={{
-        width: 50,
-        height: 50,
-        resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
+        width: widthBody,
+        height: heightBody,
+        overflow: 'visible',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-    />
+    >
+      <Image
+        style={{
+          width: 40,
+          height: 40,
+        }}
+        resizeMode="contain"
+        source={bag}
+      />
+    </View>
   );
 };
 
@@ -42,11 +52,8 @@ const Bag = (
   world: Matter.World,
   pos: { x: number; y: number },
 ): Entity => {
-  const initialBag = Matter.Bodies.rectangle(pos.x, pos.y, 30, 30, {
+  const initialBag = Matter.Bodies.rectangle(pos.x, pos.y, 35, 35, {
     label: 'Bag',
-    //mass: 0.001,
-    // force: { x: 0, y: -0.0001 },
-    // velocity: { x: 0, y: -20 },
     isStatic: true,
     collisionFilter: {
       category: collisionCategories.bag,

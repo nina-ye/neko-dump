@@ -31,7 +31,9 @@ export const TossBag = (
   if (tossTick) {
     tossTick--;
   } else {
-    entities.girl.pose = 'default';
+    if (entities.girl.pose !== 'lose') {
+      entities.girl.pose = 'default';
+    }
   }
 
   return entities;

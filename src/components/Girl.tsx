@@ -1,10 +1,11 @@
 import React from 'react';
 import Matter from 'matter-js';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 import { Entity } from '../entities/types';
 import { collisionCategories } from '../utils/constants';
 import girlDefault from '../../assets/sprites/girl_default.png';
 import girlToss from '../../assets/sprites/girl_toss.png';
+import girlLose from '../../assets/sprites/girl_lose.png';
 
 export type Pose = 'default' | 'toss' | 'lose';
 
@@ -23,17 +24,33 @@ const GirlRenderer = ({
   const yBody = body.position.y - heightBody / 2;
 
   return (
-    <Image
-      source={pose === 'toss' ? girlToss : girlDefault}
+    <View
       style={{
-        width: 120 * 0.5,
-        height: 160 * 0.5,
-        resizeMode: 'contain',
         position: 'absolute',
         left: xBody,
         top: yBody,
+        width: widthBody,
+        height: heightBody,
+        overflow: 'visible',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
-    />
+    >
+      <Image
+        style={{
+          width: 200 * 0.3,
+          height: 350 * 0.3,
+        }}
+        resizeMode="contain"
+        source={
+          pose === 'toss'
+            ? girlToss
+            : pose === 'lose'
+            ? girlLose
+            : girlDefault
+        }
+      />
+    </View>
   );
 };
 
@@ -44,8 +61,8 @@ const Girl = (
   const initialGirl = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
-    120 * 0.4,
-    160 * 0.4,
+    200 * 0.2,
+    350 * 0.2,
     {
       label: 'Girl',
       isStatic: true,
