@@ -2,29 +2,30 @@ import React from 'react';
 import Matter from 'matter-js';
 import { Pose as GirlPose } from '../components/Girl';
 
-interface Physics {
+export interface Physics {
   engine: Matter.Engine;
   world: Matter.World;
   type: 'physics';
 }
 
-interface BaseEntity {
+export interface BaseEntity {
   body: Matter.Body;
   renderer: ({ body }: { body: Matter.Body }) => React.ReactElement;
 }
 
-interface CatEntity extends BaseEntity {
+export interface CatEntity extends BaseEntity {
   type: 'cat';
   lastPoop: null | number;
 }
 
-interface PoopEntity extends BaseEntity {
+export interface PoopEntity extends BaseEntity {
   type: 'poop';
 }
 
-interface BagEntity extends Omit<BaseEntity, 'renderer'> {
+export interface BagEntity extends Omit<BaseEntity, 'renderer'> {
   type: 'bag';
   isBagged: boolean;
+  destroyTicker: number;
   renderer: ({
     body,
     isBagged,
@@ -34,7 +35,7 @@ interface BagEntity extends Omit<BaseEntity, 'renderer'> {
   }) => React.ReactElement;
 }
 
-interface GirlEntity extends Omit<BaseEntity, 'renderer'> {
+export interface GirlEntity extends Omit<BaseEntity, 'renderer'> {
   type: 'girl';
   pose: GirlPose;
   renderer: ({
@@ -46,7 +47,7 @@ interface GirlEntity extends Omit<BaseEntity, 'renderer'> {
   }) => React.ReactElement;
 }
 
-interface BackgroundEntity extends BaseEntity {
+export interface BackgroundEntity extends BaseEntity {
   type: 'background';
 }
 

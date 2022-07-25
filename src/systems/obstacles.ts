@@ -16,7 +16,7 @@ export const AddCat: GameEngineSystem = (
   { time },
 ) => {
   const world = entities.physics.world;
-  const x = Math.random() * (DEVICE_WIDTH - 45);
+  const x = 40 + Math.random() * (DEVICE_WIDTH - 80);
   const y = -60;
   const addAme = Math.random() > 0.7 ? true : false;
 

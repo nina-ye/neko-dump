@@ -60,8 +60,7 @@ const Background = (
       label: 'Background',
       isStatic: true,
       collisionFilter: {
-        category: collisionCategories.background,
-        group: collisionGroups.background,
+        mask: 0,
       },
     },
   );

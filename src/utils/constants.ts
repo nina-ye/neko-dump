@@ -4,12 +4,11 @@ export const DEVICE_HEIGHT = Dimensions.get('window').height;
 export const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export const collisionCategories = {
-  girl: 1,
-  fou: 2,
-  ame: 2,
-  poop: 4,
-  bag: 8,
-  background: 16,
+  girl: 0b0001,
+  fou: 0b0010,
+  ame: 0b0010,
+  poop: 0b0100,
+  bag: 0b1000,
 };
 
 export const collisionGroups = {
@@ -17,5 +16,4 @@ export const collisionGroups = {
   ame: -1,
   poop: -2,
   bag: -8,
-  background: -16,
 };

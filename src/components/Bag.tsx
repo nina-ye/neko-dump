@@ -44,8 +44,10 @@ const Bag = (
 ): Entity => {
   const initialBag = Matter.Bodies.rectangle(pos.x, pos.y, 30, 30, {
     label: 'Bag',
-    mass: 0.001,
-    velocity: { x: 0, y: -5 },
+    //mass: 0.001,
+    // force: { x: 0, y: -0.0001 },
+    // velocity: { x: 0, y: -20 },
+    isStatic: true,
     collisionFilter: {
       category: collisionCategories.bag,
       group: collisionGroups.bag,
@@ -59,6 +61,7 @@ const Bag = (
     renderer: BagRenderer,
     type: 'bag',
     isBagged: false,
+    destroyTicker: 10,
   };
 };
 
