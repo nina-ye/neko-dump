@@ -2,7 +2,7 @@ import Matter from 'matter-js';
 import { GameEngineSystem } from 'react-native-game-engine';
 import { Entities } from '../entities/types';
 import Ame from '../components/Ame';
-import Fou, { IMAGE_WIDTH as catImageWidth } from '../components/Fou';
+import Fou from '../components/Fou';
 import Poop from '../components/Poop';
 import {
   DEVICE_WIDTH,
