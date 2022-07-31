@@ -3,8 +3,6 @@ import Matter from 'matter-js';
 import { View, Image } from 'react-native';
 import { Entity } from '../entities/types';
 import {
-  collisionCategories,
-  collisionGroups,
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
 } from '../utils/constants';

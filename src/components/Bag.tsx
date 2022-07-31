@@ -42,7 +42,7 @@ const BagRenderer = ({
           height: 40,
         }}
         resizeMode="contain"
-        source={bag}
+        source={isBagged ? bagged : bag}
       />
     </View>
   );

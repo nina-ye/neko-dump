@@ -8,6 +8,9 @@ import {
   collisionGroups,
 } from '../utils/constants';
 
+const IMAGE_WIDTH = 150;
+const IMAGE_HEIGHT = 160;
+
 const AmeRenderer = ({ body }: { body: Matter.Body }) => {
   const widthBody = body.bounds.max.x - body.bounds.min.x;
   const heightBody = body.bounds.max.y - body.bounds.min.y;
@@ -31,8 +34,8 @@ const AmeRenderer = ({ body }: { body: Matter.Body }) => {
     >
       <Image
         style={{
-          width: 150 * 0.4,
-          height: 160 * 0.4,
+          width: IMAGE_WIDTH * 0.4,
+          height: IMAGE_HEIGHT * 0.4,
         }}
         resizeMode="contain"
         source={ame}
@@ -48,8 +51,8 @@ const Ame = (
   const initialAme = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
-    150 * 0.3,
-    160 * 0.3,
+    IMAGE_WIDTH * 0.3,
+    IMAGE_HEIGHT * 0.3,
     {
       label: 'Ame',
       velocity: { x: 0, y: 3 },

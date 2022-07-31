@@ -38,6 +38,8 @@ export interface BagEntity extends Omit<BaseEntity, 'renderer'> {
 export interface GirlEntity extends Omit<BaseEntity, 'renderer'> {
   type: 'girl';
   pose: GirlPose;
+  level: number;
+  lastLevelIncrease: number | null;
   renderer: ({
     body,
     pose,

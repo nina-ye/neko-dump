@@ -76,7 +76,7 @@ export default function Game() {
         <StatusBar hidden={true} />
       </GameEngine>
 
-      {!running ? (
+      {!running && (
         <View style={styles.splashScreenContainer}>
           <TouchableOpacity
             style={styles.startGameButton}
@@ -89,7 +89,7 @@ export default function Game() {
             <Text style={styles.startGameText}>START GAME</Text>
           </TouchableOpacity>
         </View>
-      ) : null}
+      )}
     </View>
   );
 }

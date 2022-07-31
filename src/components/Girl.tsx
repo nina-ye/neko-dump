@@ -2,10 +2,13 @@ import React from 'react';
 import Matter from 'matter-js';
 import { Image, View } from 'react-native';
 import { Entity } from '../entities/types';
-import { collisionCategories } from '../utils/constants';
+import { collisionCategories, MIN_LEVEL } from '../utils/constants';
 import girlDefault from '../../assets/sprites/girl_default.png';
 import girlToss from '../../assets/sprites/girl_toss.png';
 import girlLose from '../../assets/sprites/girl_lose.png';
+
+const IMAGE_WIDTH = 200;
+const IMAGE_HEIGHT = 350;
 
 export type Pose = 'default' | 'toss' | 'lose';
 
@@ -38,8 +41,8 @@ const GirlRenderer = ({
     >
       <Image
         style={{
-          width: 200 * 0.3,
-          height: 350 * 0.3,
+          width: IMAGE_WIDTH * 0.3,
+          height: IMAGE_HEIGHT * 0.3,
         }}
         resizeMode="contain"
         source={
@@ -61,8 +64,8 @@ const Girl = (
   const initialGirl = Matter.Bodies.rectangle(
     pos.x,
     pos.y,
-    200 * 0.2,
-    350 * 0.2,
+    IMAGE_WIDTH * 0.2,
+    IMAGE_HEIGHT * 0.2,
     {
       label: 'Girl',
       isStatic: true,
@@ -82,6 +85,8 @@ const Girl = (
     renderer: GirlRenderer,
     pose: 'default',
     type: 'girl',
+    level: MIN_LEVEL,
+    lastLevelIncrease: null,
   };
 };
 
