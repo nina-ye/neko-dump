@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { GameEngine } from 'react-native-game-engine';
 import { StatusBar } from 'expo-status-bar';
 import { Accelerometer } from 'expo-sensors';
+import { GameOverView } from './components/GameOverView';
+import { StartView } from './components/StartView';
 import entities from './entities';
 import Physics from './systems/physics';
 import { AddCat, RemoveObstacle, AddPoop } from './systems/obstacles';
@@ -18,10 +19,12 @@ import { Subscription } from 'expo-sensors/build/Pedometer';
 export default function Game() {
   const [running, setRunning] = useState(false);
   const [gameEngine, setGameEngine] = useState<any>(null);
-  const [currentPoints, setCurrentPoints] = useState(0);
+  const [currentScore, setCurrentPoints] = useState(0);
   const [accelerometerSubscription, setAccelerometerSubscription] =
     useState<null | Subscription>(null);
   const [accelerometerDataX, setAccelerometerDataX] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const _subscribeAccelerometer = () => {
     setAccelerometerSubscription(
@@ -42,6 +45,13 @@ export default function Game() {
 
     return () => _unsubscribeAccelerometer();
   }, []);
+
+  const startGame = () => {
+    setRunning(true);
+    gameEngine.swap(entities());
+    setCurrentPoints(0);
+    setIsGameOver(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -64,31 +74,33 @@ export default function Game() {
           switch (e.type) {
             case 'game_over':
               setRunning(false);
+              if (currentScore > highScore) {
+                setHighScore(currentScore);
+              }
               gameEngine.stop();
+              setIsGameOver(true);
               break;
             case 'new_point':
-              setCurrentPoints(currentPoints + 1);
+              setCurrentPoints(currentScore + 1);
           }
         }}
         style={styles.gameContainer}
       >
-        <Text style={styles.score}>{currentPoints}</Text>
+        <Text style={styles.currentScore}>{currentScore}</Text>
+
         <StatusBar hidden={true} />
       </GameEngine>
 
-      {!running && (
-        <View style={styles.splashScreenContainer}>
-          <TouchableOpacity
-            style={styles.startGameButton}
-            onPress={() => {
-              setRunning(true);
-              gameEngine.swap(entities());
-              setCurrentPoints(0);
-            }}
-          >
-            <Text style={styles.startGameText}>START GAME</Text>
-          </TouchableOpacity>
-        </View>
+      {!running && !isGameOver && (
+        <StartView onPressStart={startGame} />
+      )}
+
+      {!running && isGameOver && (
+        <GameOverView
+          onPressTryAgain={startGame}
+          score={currentScore}
+          best={highScore}
+        />
       )}
     </View>
   );
@@ -98,6 +110,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   gameContainer: {
     position: 'absolute',
@@ -106,21 +120,34 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  score: {
+  currentScore: {
     position: 'absolute',
     top: 50,
     left: DEVICE_WIDTH / 2 - 20,
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'bold',
   },
   splashScreenContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '70%',
+    height: '30%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5);',
+    borderRadius: 20,
+  },
+  score: {
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 12,
+    color: 'white',
   },
   startGameButton: {
     backgroundColor: 'black',
+    borderRadius: 25,
+    borderColor: 'white',
+    borderWidth: 2,
     paddingHorizontal: 30,
     paddingVertical: 10,
   },
