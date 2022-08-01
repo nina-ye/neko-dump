@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import fou from '../../assets/sprites/fou.gif';
+import fou from '../../assets/sprites/fou_web.gif';
 
 interface StartViewProps {
   onPressStart: () => void;

@@ -1,7 +1,7 @@
 import React from 'react';
 import Matter from 'matter-js';
 import { Image, View } from 'react-native';
-import ame from '../../assets/sprites/ame.gif';
+import ame from '../../assets/sprites/ame_web.gif';
 import { Entity } from '../entities/types';
 import {
   collisionCategories,

@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import ame from '../../assets/sprites/ame.gif';
+import ame from '../../assets/sprites/ame_web.gif';
 
 interface GameOverViewProps {
   onPressTryAgain: () => void;
